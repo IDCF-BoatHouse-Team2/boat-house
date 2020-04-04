@@ -89,7 +89,9 @@
                     <div class="cart-items-item">
                       <div class="float-left">
                         <h5 class="mb-0">
+                          <a href="#"> <i class="fa fa-times" v-on:click="ShopCartReduceFoodNum(item.shopCartItem.foodid)"></i> </a>
                           {{item.foodName}}
+                          <a href="#"> <i class="fa fa-times" v-on:click="ShopCartAddFoodNum(item.shopCartItem.foodid)"></i> </a>
                         </h5>
                         <p class="mb-0">¥{{item.price}} / x{{item.shopCartItem.num}}</p>
                         <a href="#" class="close cart-remove text-primary"> <i class="fa fa-times" v-on:click="DeleteFoodFromShopCart(item.shopCartItem.foodid)"></i> </a>
@@ -524,7 +526,32 @@ export default {
         }
       })
     },
+    
+    ShopCartReduceFoodNum:function(e){
+      let _this = this ;   
+      let userId= this.getCookie("userId"); 
+      const minus_put = 'api/ShopCartReduceFoodNum?userId='+userId+'&foodID='+parseInt(JSON.stringify(e))+'&reduceNum=1'; 
+      this.axios.put(minus_put).then(function (result) {    
+        // alert(JSON.stringify(result));
+        if (result.status === 200) {
+          _this.shopCartList=[];
+          _this.GetShopCartInfo();
+        }
+      })
+    },
 
+    ShopCartAddFoodNum:function(e){
+      let _this = this ;   
+      let userId= this.getCookie("userId"); 
+      const add_put = 'api/ShopCartAddFoodNum?userId='+userId+'&foodID='+parseInt(JSON.stringify(e))+'&addNum=1';  
+      this.axios.put(add_put).then(function (result) {    
+        // alert(JSON.stringify(result));
+        if (result.status === 200) {
+          _this.shopCartList=[];
+          _this.GetShopCartInfo();
+        }
+      })
+    },
 
     ClearShopCart:function(){
       let _this = this ;      

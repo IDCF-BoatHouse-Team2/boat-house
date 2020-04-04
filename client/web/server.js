@@ -28,7 +28,7 @@ app.post('/api/product/vote', function (req, res) {
 
 app.post('/api/product/join', (req, res) => {
   requestify
-    .post('http://product-service-api:8080/api/v1.0/join/save', req.body)
+    .post('http://13.76.97.141:7001/api/v1.0/join/save', req.body)
     .then(response => {
       console.log(res.body)
       return res.send(response.body)
@@ -37,7 +37,7 @@ app.post('/api/product/join', (req, res) => {
 
 app.get('/api/foodcategories', function (req, res) {
   requestify
-    .get('http://product-service-api:8080/api/v1.0/BoatHouse/FoodCategories')
+    .get('http://13.76.97.141:7001/api/v1.0/BoatHouse/FoodCategories')
     .then(function (response) {
       console.log(response.body)
       return res.send(response.body)
@@ -46,7 +46,7 @@ app.get('/api/foodcategories', function (req, res) {
 
 app.get('/api/foods', function (req, res) {
   requestify
-    .get('http://product-service-api:8080/api/v1.0/BoatHouse/Foods')
+    .get('http://13.76.97.141:7001/api/v1.0/BoatHouse/Foods')
     .then(function (response) {
       console.log(response.body)
       return res.send(response.body)
@@ -56,7 +56,7 @@ app.get('/api/foods', function (req, res) {
 //获取购物车
 app.get('/api/shopcart', function (req, res) {
   requestify
-    .get('http://product-service-api:8080/api/v1.0/BoatHouse/ShopCart?userId='+req.query.userId)
+    .get('http://13.76.97.141:7001/api/v1.0/BoatHouse/ShopCart?userId='+req.query.userId)
     .then(function (response) {
       console.log(response.body)
       return res.send(response.body)
@@ -66,7 +66,7 @@ app.get('/api/shopcart', function (req, res) {
 //添加购物车
 app.post('/api/food/shopcart', function (req, res) {
   requestify
-    .post('http://product-service-api:8080/api/v1.0/BoatHouse/ShopCart', req.body)
+    .post('http://13.76.97.141:7001/api/v1.0/BoatHouse/ShopCart', req.body)
     .then(function (response) {
       console.log(response.body)
       return res.send(response.body)
@@ -77,9 +77,37 @@ app.post('/api/food/shopcart', function (req, res) {
 app.put('/api/shopcart', function (req, res) {
   const userId=req.query.userId;
   const foodID=req.query.foodID;
-  const delete_put = 'http://product-service-api:8080/api/v1.0/BoatHouse/ShopCart?userId='+userId+'&foodID='+foodID;  
+  const delete_put = 'http://13.76.97.141:7001/api/v1.0/BoatHouse/ShopCart?userId='+userId+'&foodID='+foodID;  
   requestify
     .put(delete_put)
+    .then(function (response) {
+      console.log(response.body)
+      return res.send(response.body)
+    })
+})  
+
+//购物车某个菜品数量减一
+app.put('/api/ShopCartReduceFoodNum', function (req, res) {
+  const userId=req.query.userId;
+  const foodID=req.query.foodID;
+  const reduceNum=req.query.reduceNum;
+  const reduce_put = 'http://13.76.97.141:7001/api/v1.0/BoatHouse/ShopCartReduceFoodNum?userId='+userId+'&foodID='+foodID+'&reduceNum='+reduceNum;  
+  requestify
+    .put(reduce_put)
+    .then(function (response) {
+      console.log(response.body)
+      return res.send(response.body)
+    })
+})  
+
+//购物车某个菜品数量加1
+app.put('/api/ShopCartAddFoodNum', function (req, res) {
+  const userId=req.query.userId;
+  const foodID=req.query.foodID;
+  const addNum=req.query.addNum;
+  const add_put = 'http://13.76.97.141:7001/api/v1.0/BoatHouse/ShopCartAddFoodNum?userId='+userId+'&foodID='+foodID+'&addNum='+addNum;  
+  requestify
+    .put(add_put)
     .then(function (response) {
       console.log(response.body)
       return res.send(response.body)
@@ -90,7 +118,7 @@ app.put('/api/shopcart', function (req, res) {
 app.delete('/api/shopcart', function (req, res) {
   requestify
     .delete(
-      'http://product-service-api:8080/api/v1.0/BoatHouse/ShopCart?userId=' +
+      'http://13.76.97.141:7001/api/v1.0/BoatHouse/ShopCart?userId=' +
         req.query.userId
     )
     .then(function (response) {
@@ -102,7 +130,7 @@ app.delete('/api/shopcart', function (req, res) {
 app.post('/api/login', function (req, res) {
   // console.log(req);
   const { username, password} = req.body;
-  const login_post = `http://account-service-api:8080/api/v1.0/login?username=${username}&password=${password}`;
+  const login_post = `http://13.76.97.141:7002/api/v1.0/login?username=${username}&password=${password}`;
   requestify
   .post(login_post, {})
   .then(response => {
@@ -114,7 +142,7 @@ app.post('/api/login', function (req, res) {
 app.post('/api/signup',function (req, res) {
   // console.log(req);
   const { username, password} = req.body;
-  const signup_post = `http://account-service-api:8080/api/v1.0/signUp?username=${username}&password=${password}`;
+  const signup_post = `http://13.76.97.141:7002/api/v1.0/signUp?username=${username}&password=${password}`;
   requestify
   .post(signup_post, {})
   .then(response => {
@@ -125,7 +153,7 @@ app.post('/api/signup',function (req, res) {
 
 app.post("/api/orders/create", function(req, res) {
   requestify
-    .post("http://product-service-api:8080/api/v1.0/orders/create", req.body)
+    .post("http://13.76.97.141:7001/api/v1.0/orders/create", req.body)
     .then(function(response) {
       console.log(response.body);
       return res.send(response.body);

@@ -37,9 +37,9 @@ public class ShopCartController extends  BaseController {
     @RequestMapping(value = "ShopCartAddFoodNum", method = RequestMethod.PUT, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @ApiOperation("增加购物车菜品数量")
-    public  Map<String, Object> addFoodNum(@RequestParam(value = "用户ID") Integer userId,
-                                           @RequestParam(value = "菜品ID") Integer foodID,
-                                           @RequestParam(value = "增加数量") Integer addNum
+    public  Map<String, Object> addFoodNum(@RequestParam Integer userId,
+                                           @RequestParam Integer foodID,
+                                           @RequestParam Integer addNum
                                            )
             throws IllegalStateException, IOException {
 
@@ -54,9 +54,9 @@ public class ShopCartController extends  BaseController {
     @RequestMapping(value = "ShopCartReduceFoodNum", method = RequestMethod.PUT, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @ApiOperation("减少购物车菜品数量")
-    public  Map<String, Object> reduceFoodNum(@RequestParam(value = "用户ID") Integer userId,
-                                              @RequestParam(value = "菜品ID") Integer foodID,
-                                              @RequestParam(value = "减少数量") Integer reduceNum
+    public  Map<String, Object> reduceFoodNum(@RequestParam Integer userId,
+                                              @RequestParam Integer foodID,
+                                              @RequestParam Integer reduceNum
            )throws IllegalStateException, IOException {
 
         shopCartService.reduceFoodNum(userId,foodID,reduceNum);
